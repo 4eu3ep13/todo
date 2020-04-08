@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/dockets/{id}', 'DocketController@dockets');
+Route::post('/docket/create/{id}', 'DocketController@create');
+Route::post('/docket/edit/{id}', 'DocketController@edit');
