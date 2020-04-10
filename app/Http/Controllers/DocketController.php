@@ -23,7 +23,7 @@ class DocketController extends Controller
     }
 
     //Редактирование существующего списка
-    public function edit(Request $request, $id) //ID ЗАПИСИ (!)
+    public function edit(Request $request, $id) //ID СПИСКА (!)
     {
         $model = new Docket();
         return $model->editDocket($request, $id);
