@@ -11,7 +11,7 @@ class Task extends Model
 {
     protected $fillable = [
         'id',
-        'docket_id',
+        'user_id',
         'title',
         'details',
         'hard',
@@ -24,7 +24,7 @@ class Task extends Model
     {
         return DB::table('tasks')
             ->select(['id', 'title', 'details', 'hard', 'finished', 'created_at', 'updated_at',])
-            ->where('docket_id', $id)
+            ->where('user_id', $id)
             ->get();
     }
 
@@ -32,7 +32,7 @@ class Task extends Model
     public function newTask(Request $request, $id)
     {
         $task = new Task();
-        $task->docket_id = $id;
+        $task->user_id = $id;
         $task->title=$request->input('title');
         $task->details=$request->input('details');
         $task->hard=$request->input('hard');
