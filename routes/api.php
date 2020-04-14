@@ -17,17 +17,24 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-//Dockets
-Route::get('/dockets/{id}', 'DocketController@dockets');        //List
-Route::post('/docket/create/{id}', 'DocketController@create');  //Create
-Route::post('/docket/edit/{id}', 'DocketController@edit');      //Edit
 
-//Tasks
-Route::get('/tasks/{id}', 'TaskController@tasks');
-Route::post('/task/create/{id}', 'TaskController@create');
-Route::post('/task/edit/{id}', 'TaskController@edit');
+Route::post('user/login', 'AuthController@authenticate');
+Route::post('user/reg', 'RegController@reg');
 
-//Subtasks
-Route::get('/subtasks/{id}', 'SubtaskController@tasks');
-Route::post('/subtask/create/{id}', 'SubtaskController@create');
-Route::post('/subtask/edit/{id}', 'SubtaskController@edit');
+Route::middleware(['jwt.auth'])->group(function ()
+    {
+        //Dockets
+        Route::get('/dockets/{id}', 'DocketController@dockets');        //List
+        Route::post('/docket/create/{id}', 'DocketController@create');  //Create
+        Route::post('/docket/edit/{id}', 'DocketController@edit');      //Edit
+
+        //Tasks
+        Route::get('/tasks/{id}', 'TaskController@tasks');
+        Route::post('/task/create/{id}', 'TaskController@create');
+        Route::post('/task/edit/{id}', 'TaskController@edit');
+
+        //Subtasks
+        Route::get('/subtasks/{id}', 'SubtaskController@tasks');
+        Route::post('/subtask/create/{id}', 'SubtaskController@create');
+        Route::post('/subtask/edit/{id}', 'SubtaskController@edit');
+    });

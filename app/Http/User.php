@@ -31,4 +31,21 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    public function reg(Request $request)
+    {
+
+        $user = new User();
+
+        $user->login = $request->input(`login`);
+        $user->password=$request->input('password');
+        $user->token = Str::random(32);
+
+        $user->save();
+
+        return response()->json($user);
+
+        $user->save();
+
+        return $user;
+    }
 }
