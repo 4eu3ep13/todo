@@ -6,6 +6,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use \DB;
+use Validator;
 
 class Task extends Model
 {
@@ -19,6 +20,16 @@ class Task extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function rules()
+    {
+        return [
+
+            'title'=>'required|max:50|min:1',
+            'details'=>'max:100',
+        ];
+
+    }
 
     public function myTasks($id)
     {
@@ -37,7 +48,13 @@ class Task extends Model
         $task->details=$request->input('details');
         $task->hard=$request->input('hard');
 
-        $task->save();
+        $validator = Validator::make($request->all(), $this->rules());
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        } else $task->save();
+
+
 
         return response()->json($task);
     }
@@ -51,9 +68,29 @@ class Task extends Model
         $task->finished=$request->input('finished');
 
 
-        $task->save();
+        $validator = Validator::make($request->all(), $this->rules());
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        } else $task->save();
+
+
 
         return response()->json($task);
     }
 
+    public function isFinished($id, $finished)
+    {
+        return DB::table('tasks')
+            ->where('id', $id)
+            ->update(['finished' => $finished]);
+    }
+
+    public function delTask($id)
+    {
+        return DB::table('tasks')
+            ->where('id', $id)
+            ->delete();
+
+    }
 }

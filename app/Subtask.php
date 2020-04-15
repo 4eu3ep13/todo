@@ -6,6 +6,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use \DB;
+use Validator;
 
 class Subtask extends Model
 {
@@ -20,6 +21,15 @@ class Subtask extends Model
         'updated_at',
     ];
 
+    public function rules()
+    {
+        return [
+
+            'title'=>'required|max:50|min:1',
+            'details'=>'max:100',
+        ];
+
+    }
     public function mySubtasks($id)
     {
         return DB::table('subtasks')
@@ -37,7 +47,13 @@ class Subtask extends Model
         $subtask->details=$request->input('details');
         $subtask->hard=$request->input('hard');
 
-        $subtask->save();
+        $validator = Validator::make($request->all(), $this->rules());
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        } else $subtask->save();
+
+
 
         return response()->json($subtask);
     }
@@ -54,6 +70,21 @@ class Subtask extends Model
         $subtask->save();
 
         return response()->json($subtask);
+    }
+
+    public function isFinished($id, $finished)
+    {
+        return DB::table('subtasks')
+            ->where('id', $id)
+            ->update(['finished' => $finished]);
+    }
+
+    public function delSubtask($id)
+    {
+        return DB::table('subtasks')
+            ->where('id', $id)
+            ->delete();
+
     }
 
 }

@@ -28,4 +28,24 @@ class SubtaskController extends Controller
         $model = new Subtask();
         return $model->editSubtask($request, $id);
     }
+
+    public function finished($id)
+    {
+        $model = new Subtask();
+        return $model->isFinished($id, $finished = true);
+    }
+
+    public function notFinished($id)
+    {
+        $model = new Subtask();
+        return $model->isFinished($id, $finished = false);
+    }
+
+    public function delete($id)
+    {
+        $model = new Subtask();
+        return $model->delTask($id);
+    }
+
+
 }

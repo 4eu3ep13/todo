@@ -28,4 +28,22 @@ class TaskController extends Controller
         $model = new Task();
         return $model->editTask($request, $id);
     }
+
+    public function finished($id)
+    {
+        $model = new Task();
+        return $model->isFinished($id, $finished = true);
+    }
+
+    public function notFinished($id)
+    {
+        $model = new Task();
+        return $model->isFinished($id, $finished = false);
+    }
+
+    public function delete($id)
+    {
+        $model = new Task();
+        return $model->delTask($id);
+    }
 }

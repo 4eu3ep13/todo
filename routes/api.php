@@ -24,18 +24,20 @@ Route::post('/register', 'RegisterController@register');
 
 Route::middleware(['jwt.auth'])->group(function ()
     {
-        //Dockets
-        Route::get('/dockets/{id}', 'DocketController@dockets');        //List
-        Route::post('/docket/create/{id}', 'DocketController@create');  //Create
-        Route::post('/docket/edit/{id}', 'DocketController@edit');      //Edit
 
         //Tasks
-        Route::get('/tasks/{id}', 'TaskController@tasks');
-        Route::post('/task/create/{id}', 'TaskController@create');
-        Route::post('/task/edit/{id}', 'TaskController@edit');
+        Route::get('/tasks/{id}', 'TaskController@tasks');                           //List          (ID - пользователь)
+        Route::post('/task/create/{id}', 'TaskController@create');                   //Create        (ID - пользователь)
+        Route::post('/task/edit/{id}', 'TaskController@edit');                       //Edit          (ID - задача)
+        Route::post('/task/delete/{id}','TaskController@delete');                    //Delete        (ID - задача)
+        Route::put('/task/finished/{id}','TaskController@finished');                 //Finished      (ID - задача)
+        Route::put('/task/notFinished/{id}','TaskController@notFinished');           //Unfinished    (ID - задача) (ОТВЕТ??)
 
         //Subtasks
-        Route::get('/subtasks/{id}', 'SubtaskController@tasks');
-        Route::post('/subtask/create/{id}', 'SubtaskController@create');
-        Route::post('/subtask/edit/{id}', 'SubtaskController@edit');
+        Route::get('/subtasks/{id}', 'SubtaskController@subtasks');                  //List          (ID - задача)
+        Route::post('/subtask/create/{id}', 'SubtaskController@create');             //Create        (ID - задача)
+        Route::post('/subtask/edit/{id}', 'SubtaskController@edit');                 //Edit          (ID - подзадача)
+        Route::post('/subtask/delete/{id}','SubtaskController@delete');              //Delete        (ID - подзадача)
+        Route::put('/subtask/finished/{id}','SubtaskController@finished');           //Finished      (ID - подзадача)
+        Route::put('/subtask/notFinished/{id}','SubtaskController@notFinished');     //Unfinished    (ID - подзадача)
     });
