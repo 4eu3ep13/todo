@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'secret' => env('JWT_SECRET','De90c02NeQBfJDZTZMd25QqSF5OewX06jWIGafnuh4dA4d6a69JDadJQwiHdeZQD'),
+    'secret' => env('JWT_SECRET','kcoe6mHjjJF3B47dCDE9PgSu3MdjQm0mT4aisMMgwujoNwPOqZRRTDAg7YMlVst5'),
 
     /*
     |--------------------------------------------------------------------------
@@ -135,6 +135,7 @@ return [
     */
 
     'algo' => env('JWT_ALGO', 'HS256'),
+
 
     /*
     |--------------------------------------------------------------------------

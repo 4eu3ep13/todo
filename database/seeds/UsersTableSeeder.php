@@ -16,7 +16,8 @@ class UsersTableSeeder extends Seeder
             ['login' => 'Andres', 'password' => Hash::make('123456')]
         );
 
-        foreach ($users as $user) {
+        foreach ($users as $user)
+        {
             User::create($user);
         }
     }

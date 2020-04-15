@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Validator;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,21 +33,32 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    public function reg(Request $request)
-    {
 
+    public function rules()
+    {
+        return [
+
+            'login'=>'required|max:32|unique:users|min:6',
+            'password'=>'required|max:32|min:6|confirmed',
+        ];
+
+    }
+
+    public function registerUser(Request $request)
+    {
         $user = new User();
 
-        $user->login = $request->input(`login`);
-        $user->password=$request->input('password');
-        $user->token = Str::random(32);
+        $user->login = $request->input('login');
+        $user->password = bcrypt($request->input('password'));
 
-        $user->save();
+        $validator = Validator::make($request->all(), $this->rules());
 
-        return response()->json($user);
-
-        $user->save();
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        } else $user->save();
 
         return $user;
     }
+
+
 }
