@@ -10,7 +10,8 @@ use Validator;
 
 class Task extends Model
 {
-    protected $fillable = [
+    protected $fillable =
+    [
         'id',
         'user_id',
         'title',
@@ -31,11 +32,22 @@ class Task extends Model
 
     }
 
-    public function myTasks($id)
+    public function listFinished($id, $finished, $column, $par)
+    {
+        return DB::table('tasks')
+            ->select(['id', 'name', 'done', 'created_at', 'updated_at'])
+            ->where('user_id', $id)
+            ->where('finished', $finished)
+            ->orderBy($column, $par)
+            ->get();
+    }
+
+    public function myTasks($id, $column, $par)
     {
         return DB::table('tasks')
             ->select(['id', 'title', 'details', 'hard', 'finished', 'created_at', 'updated_at',])
             ->where('user_id', $id)
+            ->orderBy($column, $par)
             ->get();
     }
 

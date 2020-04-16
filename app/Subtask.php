@@ -30,11 +30,12 @@ class Subtask extends Model
         ];
 
     }
-    public function mySubtasks($id)
+    public function mySubtasks($id, $column, $par)
     {
         return DB::table('subtasks')
             ->select(['id', 'title', 'details', 'hard', 'finished', 'created_at', 'updated_at',])
             ->where('task_id', $id)
+            ->orderBy($column, $par)
             ->get();
     }
 

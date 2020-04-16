@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class SubtaskController extends Controller
 {
-    //Вывод всех подзадач, относящихся к данной задаче
-    public function subtasks($id) //ID пользователя
+    //Вывод всех подзадач, относящихся к данной задаче, в обратном хронологическом порядке
+    public function subtasks($column, $par, ) //ID пользователя
     {
         $model = new Subtask();
-        return $model->mySubtasks($id);
+        return $model->mySubtasks($id, $column = 'created_at', $par = 'desc');
     }
 
     //Создание новой подзадачи
