@@ -20,6 +20,8 @@ class Task extends Model
         'finished',
         'created_at',
         'updated_at',
+        'yes',
+        'no',
     ];
 
     public function rules()
@@ -44,6 +46,7 @@ class Task extends Model
 
     public function myTasks($id, $column, $par)
     {
+
         return DB::table('tasks')
             ->select(['id', 'title', 'details', 'hard', 'finished', 'created_at', 'updated_at',])
             ->where('user_id', $id)
@@ -105,4 +108,5 @@ class Task extends Model
             ->delete();
 
     }
+
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use \DB;
 use Validator;
+use App\Task;
 
 class Subtask extends Model
 {
@@ -52,11 +53,9 @@ class Subtask extends Model
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
-        } else $subtask->save();
-
-
-
-        return response()->json($subtask);
+        } else
+            $subtask->save();
+            return response()->json($subtask);
     }
 
     public function editSubtask (Request $request, $id)

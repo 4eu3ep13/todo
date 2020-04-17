@@ -44,7 +44,7 @@ class SubtaskController extends Controller
     public function delete($id)
     {
         $model = new Subtask();
-        return $model->delTask($id);
+        return $model->delSubtask($id);
     }
 
 
